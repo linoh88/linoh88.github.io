@@ -25,34 +25,11 @@ body {
 font-family: ‘DM Sans’, sans-serif;
 background: var(–black);
 color: var(–white);
-cursor: none;
 overflow-x: hidden;
 }
 
 /* CUSTOM CURSOR */
-.cursor {
-position: fixed;
-width: 12px; height: 12px;
-background: var(–accent);
-border-radius: 50%;
-pointer-events: none;
-z-index: 9999;
-transform: translate(-50%, -50%);
-transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
-mix-blend-mode: difference;
-}
-.cursor-ring {
-position: fixed;
-width: 40px; height: 40px;
-border: 1px solid rgba(200,255,0,0.5);
-border-radius: 50%;
-pointer-events: none;
-z-index: 9998;
-transform: translate(-50%, -50%);
-transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
-}
-.cursor.hover { width: 6px; height: 6px; }
-.cursor-ring.hover { width: 60px; height: 60px; border-color: var(–accent); }
+.cursor, .cursor-ring { display: none; }
 
 /* NAV */
 nav {
@@ -943,7 +920,7 @@ transform: translateY(0);
   <p class="cta-sub">Rejoignez plus de 5 000 clients satisfaits et équipez-vous avec les meilleures technologies du moment.</p>
   <div class="cta-buttons">
     <a href="#produits" class="btn-primary">Voir les produits →</a>
-    <a href="mailto:contact@amdbusiness.fr" class="btn-secondary">Nous contacter</a>
+    <a href="/cdn-cgi/l/email-protection#15767a7b61747661557478717760667c7b7066663b7367" class="btn-secondary">Nous contacter</a>
   </div>
 </section>
 
@@ -999,54 +976,47 @@ transform: translateY(0);
   </div>
 </footer>
 
-<script>
-  // Cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
+// Cursor
+const cursor = document.getElementById(‘cursor’);
+const ring = document.getElementById(‘cursorRing’);
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-  function animateRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
+document.addEventListener(‘mousemove’, e => {
+mx = e.clientX; my = e.clientY;
+cursor.style.left = mx + ‘px’;
+cursor.style.top = my + ‘px’;
+});
 
-  document.querySelectorAll('a, button, .product-card, .avantage-item').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
-    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
-  });
+function animateRing() {
+rx += (mx - rx) * 0.12;
+ry += (my - ry) * 0.12;
+ring.style.left = rx + ‘px’;
+ring.style.top = ry + ‘px’;
+requestAnimationFrame(animateRing);
+}
+animateRing();
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+document.querySelectorAll(‘a, button, .product-card, .avantage-item’).forEach(el => {
+el.addEventListener(‘mouseenter’, () => { cursor.classList.add(‘hover’); ring.classList.add(‘hover’); });
+el.addEventListener(‘mouseleave’, () => { cursor.classList.remove(‘hover’); ring.classList.remove(‘hover’); });
+});
 
-  // Nav background on scroll
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.mixBlendMode = window.scrollY > 100 ? 'normal' : 'difference';
-    if (window.scrollY > 100) {
-      nav.style.background = 'rgba(10,10,10,0.95)';
-      nav.style.backdropFilter = 'blur(20px)';
-      nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
-    } else {
-      nav.style.background = 'transparent';
-      nav.style.backdropFilter = 'none';
-      nav.style.borderBottom = 'none';
-    }
-  });
-</script>
+// Scroll reveal
+const reveals = document.querySelectorAll(’.reveal’);
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(e => { if (e.isIntersecting) e.target.classList.add(‘visible’); });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
 
-</body>
-</html>
+// Nav background on scroll
+const nav = document.querySelector(‘nav’);
+window.addEventListener(‘scroll’, () => {
+nav.style.mixBlendMode = window.scrollY > 100 ? ‘normal’ : ‘difference’;
+if (window.scrollY > 100) {
+nav.style.background = ‘rgba(10,10,10,0.95)’;
+nav.style.backdropFilter = ‘blur(20px)’;
+nav.style.borderBottom = ‘1px solid rgba(255,255,255,0.06)’;
+} else {
+nav
