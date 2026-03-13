@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AMD Business — Excellence Tech 2025</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #0a0a0a;
@@ -14,686 +13,597 @@
     --accent: #c8ff00;
     --accent2: #ff3c00;
     --gray: #888880;
-    --mid: #222218;
+    --mid: #1a1a12;
   }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
 
-body {
-font-family: ‘DM Sans’, sans-serif;
-background: var(–black);
-color: var(–white);
-overflow-x: hidden;
-}
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,242,235,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--accent);
+    padding: 12px 28px;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
 
-/* CUSTOM CURSOR */
-.cursor, .cursor-ring { display: none; }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(200,255,0,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(255,60,0,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s ease forwards;
+  }
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 11vw, 170px);
+    line-height: 0.92;
+    letter-spacing: -1px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-headline .line { display: block; overflow: hidden; }
+  .hero-headline .line span {
+    display: block;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: slideUp 0.9s ease forwards;
+  }
+  .hero-headline .line:nth-child(1) span { animation-delay: 0.3s; }
+  .hero-headline .line:nth-child(2) span { animation-delay: 0.45s; }
+  .hero-headline .line:nth-child(3) span { animation-delay: 0.6s; }
+  .hero-headline .outline {
+    -webkit-text-stroke: 2px var(--accent);
+    color: transparent;
+  }
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s ease forwards;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-desc {
+    max-width: 380px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(245,242,235,0.55);
+    font-weight: 300;
+  }
+  .hero-desc strong { color: var(--white); font-weight: 500; }
+  .hero-stats { display: flex; gap: 50px; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
 
-/* NAV */
-nav {
-position: fixed;
-top: 0; left: 0; right: 0;
-z-index: 100;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 28px 60px;
-mix-blend-mode: difference;
-}
-.nav-logo {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 22px;
-letter-spacing: 4px;
-color: var(–white);
-}
-.nav-logo span { color: var(–accent); }
-.nav-links {
-display: flex;
-gap: 40px;
-list-style: none;
-}
-.nav-links a {
-font-family: ‘Space Mono’, monospace;
-font-size: 11px;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(–white);
-text-decoration: none;
-position: relative;
-opacity: 0.7;
-transition: opacity 0.3s;
-}
-.nav-links a::after {
-content: ‘’;
-position: absolute;
-bottom: -2px; left: 0;
-width: 0; height: 1px;
-background: var(–accent);
-transition: width 0.3s;
-}
-.nav-links a:hover { opacity: 1; }
-.nav-links a:hover::after { width: 100%; }
-.nav-cta {
-font-family: ‘Space Mono’, monospace;
-font-size: 11px;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(–black);
-background: var(–accent);
-padding: 12px 28px;
-text-decoration: none;
-transition: background 0.3s, transform 0.3s;
-clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-}
-.nav-cta:hover { background: var(–white); transform: translateY(-2px); }
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background: var(--mid);
+    padding: 18px 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px;
+    letter-spacing: 4px;
+    color: var(--gray);
+    padding: 0 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .marquee-item::after { content: '✦'; color: var(--accent); font-size: 11px; }
 
-/* HERO */
-.hero {
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-justify-content: flex-end;
-padding: 0 60px 80px;
-position: relative;
-overflow: hidden;
-}
+  /* ── SECTIONS ── */
+  .section { padding: 120px 60px; }
 
-.hero-bg {
-position: absolute;
-inset: 0;
-background:
-radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,255,0,0.06) 0%, transparent 60%),
-radial-gradient(ellipse 40% 60% at 20% 70%, rgba(255,60,0,0.04) 0%, transparent 60%);
-}
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 200px;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
 
-.hero-grid {
-position: absolute;
-inset: 0;
-background-image:
-linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-background-size: 80px 80px;
-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-}
+  /* ── PRODUCTS ── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+  .product-card {
+    background: var(--mid);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .product-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover { background: #20200f; }
+  .product-card:hover::after { transform: scaleX(1); }
+  .product-card.featured {
+    grid-row: span 2;
+    background: var(--accent);
+    color: var(--black);
+  }
+  .product-card.featured::after { background: var(--black); }
+  .product-card.featured:hover { background: #d4ff1a; }
+  .product-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    background: var(--accent);
+    color: var(--black);
+    margin-bottom: 30px;
+  }
+  .product-card.featured .product-badge {
+    background: var(--black);
+    color: var(--accent);
+  }
+  .product-icon { font-size: 38px; display: block; margin-bottom: 24px; }
+  .product-cat {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .product-card.featured .product-cat { color: rgba(0,0,0,0.5); }
+  .product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+  .product-card.featured .product-name { color: var(--black); }
+  .product-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(245,242,235,0.45);
+    margin-bottom: 28px;
+  }
+  .product-card.featured .product-desc { color: rgba(0,0,0,0.6); }
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--gray);
+  }
+  .product-card.featured .product-price { color: rgba(0,0,0,0.45); }
+  .product-arrow {
+    position: absolute;
+    bottom: 36px; right: 36px;
+    font-size: 20px;
+    opacity: 0.25;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .product-card:hover .product-arrow { opacity: 1; transform: translate(3px,-3px); }
 
-.hero-tag {
-font-family: ‘Space Mono’, monospace;
-font-size: 11px;
-letter-spacing: 3px;
-color: var(–accent);
-text-transform: uppercase;
-margin-bottom: 30px;
-opacity: 0;
-animation: fadeUp 0.8s 0.2s ease forwards;
-}
-.hero-tag::before { content: ’// ’; opacity: 0.5; }
+  /* ── AVANTAGES ── */
+  .avantages {
+    background: var(--cream);
+    color: var(--black);
+  }
+  .avantages .section-label { color: var(--accent2); }
+  .avantages .section-label::after { background: rgba(0,0,0,0.12); }
+  .avantages-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 70px;
+  }
+  .avantages-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(50px, 6vw, 88px);
+    line-height: 0.95;
+  }
+  .avantages-title em {
+    font-style: normal;
+    -webkit-text-stroke: 2px var(--black);
+    color: transparent;
+  }
+  .avantages-intro {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(10,10,10,0.55);
+  }
+  .avantages-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .avantage-item {
+    background: rgba(10,10,10,0.05);
+    padding: 36px 28px;
+    transition: background 0.3s;
+  }
+  .avantage-item:hover { background: rgba(10,10,10,0.09); }
+  .avantage-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--accent2);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .avantage-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .avantage-desc { font-size: 13px; line-height: 1.7; color: rgba(10,10,10,0.5); }
 
-.hero-headline {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(80px, 12vw, 180px);
-line-height: 0.92;
-letter-spacing: -2px;
-mix-blend-mode: normal;
-position: relative;
-z-index: 2;
-}
+  /* ── AVIS ── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .tcard {
+    background: var(--mid);
+    padding: 48px;
+    position: relative;
+  }
+  .tcard.featured-t { background: var(--accent); color: var(--black); }
+  .tcard-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    line-height: 0.8;
+    opacity: 0.12;
+    position: absolute;
+    top: 24px; right: 36px;
+  }
+  .stars { color: var(--accent); font-size: 13px; letter-spacing: 3px; margin-bottom: 22px; }
+  .tcard.featured-t .stars { color: rgba(0,0,0,0.5); }
+  .tcard-text {
+    font-size: 16px;
+    line-height: 1.75;
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 32px;
+    color: rgba(245,242,235,0.8);
+  }
+  .tcard.featured-t .tcard-text { color: rgba(0,0,0,0.7); }
+  .tcard-author { display: flex; align-items: center; gap: 14px; }
+  .avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .tcard.featured-t .avatar { background: var(--black); color: var(--accent); }
+  .author-name { font-size: 14px; font-weight: 700; }
+  .author-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    opacity: 0.45;
+    margin-top: 2px;
+  }
 
-.hero-headline .line {
-display: block;
-overflow: hidden;
-}
-.hero-headline .line span {
-display: block;
-opacity: 0;
-transform: translateY(100%);
-animation: slideUp 0.9s ease forwards;
-}
-.hero-headline .line:nth-child(1) span { animation-delay: 0.3s; }
-.hero-headline .line:nth-child(2) span { animation-delay: 0.45s; }
-.hero-headline .line:nth-child(3) span { animation-delay: 0.6s; }
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--accent);
+    color: var(--black);
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 280px;
+    color: rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    letter-spacing: -10px;
+    user-select: none;
+  }
+  .cta-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.45;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 9vw, 130px);
+    line-height: 0.95;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .cta-sub {
+    font-size: 16px;
+    opacity: 0.6;
+    max-width: 480px;
+    margin: 0 auto 50px;
+    line-height: 1.7;
+    position: relative;
+  }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; position: relative; }
+  .btn-dark {
+    background: var(--black);
+    color: var(--accent);
+    padding: 17px 46px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+  .btn-outline {
+    border: 2px solid rgba(0,0,0,0.25);
+    color: var(--black);
+    padding: 17px 46px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.3s;
+  }
+  .btn-outline:hover { border-color: rgba(0,0,0,0.6); }
 
-.hero-headline .accent-word {
--webkit-text-stroke: 2px var(–accent);
-color: transparent;
-}
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 80px 60px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 70px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 4px;
+    color: var(--white);
+    display: block;
+    margin-bottom: 18px;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 28px;
+  }
+  .footer-social { display: flex; gap: 10px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; text-decoration: none; color: var(--white);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .social-btn:hover { border-color: var(--accent); background: rgba(200,255,0,0.08); }
+  .footer-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 22px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.38);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-bottom p {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.18);
+  }
+  .footer-bottom span { color: var(--accent); }
 
-.hero-bottom {
-display: flex;
-justify-content: space-between;
-align-items: flex-end;
-margin-top: 60px;
-opacity: 0;
-animation: fadeUp 0.8s 0.8s ease forwards;
-}
-.hero-desc {
-max-width: 380px;
-font-size: 15px;
-line-height: 1.7;
-color: rgba(245,242,235,0.6);
-font-weight: 300;
-}
-.hero-desc strong { color: var(–white); font-weight: 500; }
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(100%); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
 
-.hero-stats {
-display: flex;
-gap: 60px;
-}
-.stat-item { text-align: right; }
-.stat-num {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 52px;
-line-height: 1;
-color: var(–accent);
-}
-.stat-label {
-font-family: ‘Space Mono’, monospace;
-font-size: 10px;
-letter-spacing: 2px;
-color: var(–gray);
-text-transform: uppercase;
-margin-top: 4px;
-}
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .d1 { transition-delay: 0.1s; }
+  .d2 { transition-delay: 0.2s; }
+  .d3 { transition-delay: 0.3s; }
+  .d4 { transition-delay: 0.4s; }
 
-.scroll-indicator {
-position: absolute;
-bottom: 40px;
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 8px;
-opacity: 0;
-animation: fadeIn 1s 1.2s ease forwards;
-}
-.scroll-indicator span {
-font-family: ‘Space Mono’, monospace;
-font-size: 9px;
-letter-spacing: 3px;
-color: var(–gray);
-text-transform: uppercase;
-}
-.scroll-line {
-width: 1px;
-height: 60px;
-background: linear-gradient(var(–accent), transparent);
-animation: scrollPulse 2s infinite;
-}
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 10px 18px; font-size: 10px; }
 
-/* MARQUEE */
-.marquee-section {
-border-top: 1px solid rgba(255,255,255,0.08);
-border-bottom: 1px solid rgba(255,255,255,0.08);
-padding: 20px 0;
-overflow: hidden;
-background: var(–mid);
-}
-.marquee-track {
-display: flex;
-gap: 0;
-animation: marquee 20s linear infinite;
-white-space: nowrap;
-}
-.marquee-item {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 18px;
-letter-spacing: 4px;
-padding: 0 40px;
-color: var(–gray);
-display: flex;
-align-items: center;
-gap: 40px;
-}
-.marquee-item::after {
-content: ‘✦’;
-color: var(–accent);
-font-size: 12px;
-}
+    .hero { padding: 100px 24px 60px; }
+    .hero-bottom { flex-direction: column; gap: 36px; align-items: flex-start; }
+    .hero-stats { gap: 28px; }
+    .stat-num { font-size: 36px; }
 
-/* PRODUCTS */
-.section {
-padding: 120px 60px;
-}
+    .section { padding: 70px 24px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .product-card.featured { grid-row: span 1; }
 
-.section-label {
-font-family: ‘Space Mono’, monospace;
-font-size: 11px;
-letter-spacing: 3px;
-color: var(–accent);
-text-transform: uppercase;
-margin-bottom: 60px;
-display: flex;
-align-items: center;
-gap: 20px;
-}
-.section-label::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: rgba(255,255,255,0.1);
-max-width: 200px;
-}
+    .avantages-header { grid-template-columns: 1fr; gap: 28px; }
+    .avantages-list { grid-template-columns: 1fr 1fr; }
 
-.products-grid {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-gap: 2px;
-}
+    .testimonials-grid { grid-template-columns: 1fr; }
 
-.product-card {
-background: var(–mid);
-padding: 50px 40px;
-position: relative;
-overflow: hidden;
-transition: background 0.4s;
-cursor: none;
-}
-.product-card::before {
-content: ‘’;
-position: absolute;
-bottom: 0; left: 0;
-width: 100%; height: 2px;
-background: var(–accent);
-transform: scaleX(0);
-transform-origin: left;
-transition: transform 0.4s ease;
-}
-.product-card:hover { background: #1a1a10; }
-.product-card:hover::before { transform: scaleX(1); }
+    .cta-section { padding: 80px 24px; }
+    .cta-btns { flex-direction: column; align-items: stretch; }
+    .btn-dark, .btn-outline { text-align: center; }
 
-.product-card.featured {
-grid-row: span 2;
-background: var(–accent);
-color: var(–black);
-}
-.product-card.featured::before { background: var(–black); }
-.product-card.featured .product-cat,
-.product-card.featured .product-price { color: rgba(0,0,0,0.5); }
-.product-card.featured .product-name { color: var(–black); }
-.product-card.featured .product-badge { background: var(–black); color: var(–accent); }
-
-.product-cat {
-font-family: ‘Space Mono’, monospace;
-font-size: 10px;
-letter-spacing: 2px;
-color: var(–gray);
-text-transform: uppercase;
-margin-bottom: 20px;
-}
-.product-icon {
-font-size: 40px;
-margin-bottom: 30px;
-display: block;
-}
-.product-name {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 36px;
-letter-spacing: 1px;
-color: var(–white);
-line-height: 1;
-margin-bottom: 16px;
-}
-.product-desc {
-font-size: 13px;
-line-height: 1.7;
-color: rgba(245,242,235,0.5);
-margin-bottom: 30px;
-}
-.product-card.featured .product-desc { color: rgba(0,0,0,0.6); }
-.product-price {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 28px;
-color: var(–gray);
-}
-.product-badge {
-position: absolute;
-top: 30px; right: 30px;
-background: var(–accent);
-color: var(–black);
-font-family: ‘Space Mono’, monospace;
-font-size: 9px;
-letter-spacing: 2px;
-padding: 6px 12px;
-text-transform: uppercase;
-}
-.product-arrow {
-position: absolute;
-bottom: 40px; right: 40px;
-width: 44px; height: 44px;
-border: 1px solid currentColor;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 18px;
-opacity: 0.3;
-transition: opacity 0.3s, transform 0.3s;
-}
-.product-card:hover .product-arrow { opacity: 1; transform: translate(4px, -4px); }
-.product-card.featured .product-arrow { opacity: 0.5; }
-.product-card.featured:hover .product-arrow { opacity: 1; }
-
-/* AVANTAGES */
-.avantages {
-background: var(–cream);
-color: var(–black);
-}
-.avantages .section-label { color: var(–accent2); }
-.avantages .section-label::after { background: rgba(0,0,0,0.1); }
-
-.avantages-header {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 80px;
-align-items: end;
-margin-bottom: 80px;
-}
-.avantages-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(50px, 6vw, 90px);
-line-height: 0.95;
-letter-spacing: -1px;
-}
-.avantages-title em {
-font-style: normal;
--webkit-text-stroke: 2px var(–black);
-color: transparent;
-}
-.avantages-intro {
-font-size: 16px;
-line-height: 1.8;
-color: rgba(10,10,10,0.6);
-}
-
-.avantages-list {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 2px;
-}
-.avantage-item {
-background: rgba(10,10,10,0.04);
-padding: 40px 30px;
-transition: background 0.3s;
-}
-.avantage-item:hover { background: rgba(10,10,10,0.08); }
-.avantage-num {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 60px;
-color: var(–accent2);
-line-height: 1;
-margin-bottom: 20px;
-opacity: 0.3;
-}
-.avantage-title {
-font-size: 16px;
-font-weight: 700;
-margin-bottom: 12px;
-color: var(–black);
-}
-.avantage-desc {
-font-size: 13px;
-line-height: 1.7;
-color: rgba(10,10,10,0.55);
-}
-
-/* TESTIMONIALS */
-.testimonials { position: relative; overflow: hidden; }
-
-.testimonials-bg {
-position: absolute;
-inset: 0;
-background: radial-gradient(ellipse 50% 70% at 50% 50%, rgba(200,255,0,0.04) 0%, transparent 70%);
-}
-
-.testimonials-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 2px;
-margin-top: 60px;
-}
-
-.testimonial-card {
-background: var(–mid);
-padding: 50px;
-position: relative;
-}
-.testimonial-card:first-child {
-background: var(–accent);
-color: var(–black);
-}
-.testimonial-quote {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 80px;
-line-height: 0.8;
-opacity: 0.15;
-position: absolute;
-top: 30px; right: 40px;
-}
-.testimonial-card:first-child .testimonial-quote { opacity: 0.2; }
-.stars { color: var(–accent2); font-size: 14px; margin-bottom: 24px; letter-spacing: 2px; }
-.testimonial-card:first-child .stars { color: var(–black); }
-.testimonial-text {
-font-size: 17px;
-line-height: 1.7;
-font-style: italic;
-margin-bottom: 36px;
-font-weight: 300;
-}
-.testimonial-card:first-child .testimonial-text { color: rgba(0,0,0,0.75); }
-.testimonial-author {
-display: flex;
-align-items: center;
-gap: 16px;
-}
-.author-avatar {
-width: 44px; height: 44px;
-border-radius: 50%;
-background: var(–accent);
-display: flex;
-align-items: center;
-justify-content: center;
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 18px;
-color: var(–black);
-flex-shrink: 0;
-}
-.testimonial-card:first-child .author-avatar { background: var(–black); color: var(–accent); }
-.author-name { font-weight: 700; font-size: 14px; }
-.author-role {
-font-family: ‘Space Mono’, monospace;
-font-size: 10px;
-letter-spacing: 1px;
-opacity: 0.5;
-margin-top: 2px;
-}
-.testimonial-card:first-child .author-role { opacity: 0.6; }
-
-/* CTA */
-.cta-section {
-background: var(–accent);
-color: var(–black);
-padding: 120px 60px;
-text-align: center;
-position: relative;
-overflow: hidden;
-}
-.cta-bg-text {
-position: absolute;
-inset: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 300px;
-color: rgba(0,0,0,0.05);
-pointer-events: none;
-white-space: nowrap;
-letter-spacing: -10px;
-}
-.cta-tag {
-font-family: ‘Space Mono’, monospace;
-font-size: 11px;
-letter-spacing: 3px;
-text-transform: uppercase;
-opacity: 0.5;
-margin-bottom: 24px;
-}
-.cta-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(60px, 8vw, 120px);
-line-height: 0.95;
-margin-bottom: 30px;
-}
-.cta-sub {
-font-size: 16px;
-opacity: 0.65;
-margin-bottom: 50px;
-max-width: 500px;
-margin-left: auto;
-margin-right: auto;
-line-height: 1.7;
-}
-.cta-buttons {
-display: flex;
-gap: 16px;
-justify-content: center;
-}
-.btn-primary {
-background: var(–black);
-color: var(–accent);
-padding: 18px 48px;
-font-family: ‘Space Mono’, monospace;
-font-size: 12px;
-letter-spacing: 2px;
-text-transform: uppercase;
-text-decoration: none;
-clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-transition: background 0.3s, transform 0.3s;
-}
-.btn-primary:hover { background: #1a1a10; transform: translateY(-3px); }
-.btn-secondary {
-border: 2px solid rgba(0,0,0,0.3);
-color: var(–black);
-padding: 18px 48px;
-font-family: ‘Space Mono’, monospace;
-font-size: 12px;
-letter-spacing: 2px;
-text-transform: uppercase;
-text-decoration: none;
-transition: border-color 0.3s, transform 0.3s;
-}
-.btn-secondary:hover { border-color: var(–black); transform: translateY(-3px); }
-
-/* FOOTER */
-footer {
-background: var(–black);
-border-top: 1px solid rgba(255,255,255,0.06);
-padding: 80px 60px 40px;
-}
-.footer-top {
-display: grid;
-grid-template-columns: 1.5fr 1fr 1fr 1fr;
-gap: 60px;
-margin-bottom: 80px;
-}
-.footer-brand .nav-logo { font-size: 28px; display: block; margin-bottom: 20px; }
-.footer-brand p {
-font-size: 13px;
-line-height: 1.8;
-color: rgba(255,255,255,0.35);
-margin-bottom: 30px;
-}
-.footer-social { display: flex; gap: 12px; }
-.social-btn {
-width: 38px; height: 38px;
-border: 1px solid rgba(255,255,255,0.12);
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 14px;
-text-decoration: none;
-transition: border-color 0.3s, background 0.3s;
-}
-.social-btn:hover { border-color: var(–accent); background: rgba(200,255,0,0.1); }
-.footer-col h4 {
-font-family: ‘Space Mono’, monospace;
-font-size: 10px;
-letter-spacing: 3px;
-text-transform: uppercase;
-color: var(–gray);
-margin-bottom: 24px;
-}
-.footer-col ul { list-style: none; }
-.footer-col li { margin-bottom: 12px; }
-.footer-col a {
-font-size: 13px;
-color: rgba(255,255,255,0.45);
-text-decoration: none;
-transition: color 0.3s;
-}
-.footer-col a:hover { color: var(–white); }
-.footer-bottom {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding-top: 30px;
-border-top: 1px solid rgba(255,255,255,0.06);
-}
-.footer-bottom p {
-font-family: ‘Space Mono’, monospace;
-font-size: 10px;
-letter-spacing: 1px;
-color: rgba(255,255,255,0.2);
-}
-.footer-bottom span { color: var(–accent); }
-
-/* ANIMATIONS */
-@keyframes fadeUp {
-from { opacity: 0; transform: translateY(30px); }
-to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
-}
-@keyframes slideUp {
-from { opacity: 0; transform: translateY(100%); }
-to { opacity: 1; transform: translateY(0); }
-}
-@keyframes marquee {
-from { transform: translateX(0); }
-to { transform: translateX(-50%); }
-}
-@keyframes scrollPulse {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.3; }
-}
-
-/* REVEAL ON SCROLL */
-.reveal {
-opacity: 0;
-transform: translateY(40px);
-transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.reveal.visible {
-opacity: 1;
-transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    footer { padding: 60px 24px 30px; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  }
 </style>
-
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <!-- NAV -->
-
 <nav>
   <div class="nav-logo">AMD<span>.</span>BUSINESS</div>
   <ul class="nav-links">
@@ -706,129 +616,113 @@ transform: translateY(0);
 </nav>
 
 <!-- HERO -->
-
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
   <div class="hero-grid"></div>
-
-  <div class="hero-tag">Technologie de Pointe — Collection 2025</div>
-
+  <div class="hero-tag">// Technologie de Pointe — Collection 2025</div>
   <h1 class="hero-headline">
     <span class="line"><span>L'Excellence</span></span>
-    <span class="line"><span><em class="accent-word">Tech</em> au</span></span>
+    <span class="line"><span><span class="outline">Tech</span> au</span></span>
     <span class="line"><span>de vos besoins.</span></span>
   </h1>
-
   <div class="hero-bottom">
-    <p class="hero-desc">
-      AMD Business sélectionne les <strong>produits électroniques les plus performants</strong> du marché pour répondre à vos exigences professionnelles et personnelles.
-    </p>
+    <p class="hero-desc">AMD Business sélectionne les <strong>produits électroniques les plus performants</strong> du marché pour répondre à vos exigences professionnelles et personnelles.</p>
     <div class="hero-stats">
-      <div class="stat-item">
+      <div>
         <div class="stat-num">5K+</div>
         <div class="stat-label">Clients Satisfaits</div>
       </div>
-      <div class="stat-item">
+      <div>
         <div class="stat-num">200+</div>
         <div class="stat-label">Produits</div>
       </div>
-      <div class="stat-item">
+      <div>
         <div class="stat-num">4.9★</div>
         <div class="stat-label">Note Moyenne</div>
       </div>
     </div>
   </div>
-
-  <div class="scroll-indicator">
-    <span>Défiler</span>
-    <div class="scroll-line"></div>
-  </div>
 </section>
 
 <!-- MARQUEE -->
-
-<div class="marquee-section">
+<div class="marquee-wrap">
   <div class="marquee-track">
-    <div class="marquee-item">Laptops Gaming</div>
-    <div class="marquee-item">Moniteurs 4K</div>
-    <div class="marquee-item">Processeurs AMD</div>
-    <div class="marquee-item">SSD NVMe</div>
-    <div class="marquee-item">Cartes Graphiques</div>
-    <div class="marquee-item">Périphériques Pro</div>
-    <div class="marquee-item">Laptops Gaming</div>
-    <div class="marquee-item">Moniteurs 4K</div>
-    <div class="marquee-item">Processeurs AMD</div>
-    <div class="marquee-item">SSD NVMe</div>
-    <div class="marquee-item">Cartes Graphiques</div>
-    <div class="marquee-item">Périphériques Pro</div>
+    <span class="marquee-item">Laptops Gaming</span>
+    <span class="marquee-item">Moniteurs 4K</span>
+    <span class="marquee-item">Processeurs AMD</span>
+    <span class="marquee-item">SSD NVMe</span>
+    <span class="marquee-item">Cartes Graphiques</span>
+    <span class="marquee-item">Périphériques Pro</span>
+    <span class="marquee-item">Laptops Gaming</span>
+    <span class="marquee-item">Moniteurs 4K</span>
+    <span class="marquee-item">Processeurs AMD</span>
+    <span class="marquee-item">SSD NVMe</span>
+    <span class="marquee-item">Cartes Graphiques</span>
+    <span class="marquee-item">Périphériques Pro</span>
   </div>
 </div>
 
 <!-- PRODUITS -->
-
 <section class="section" id="produits">
   <div class="section-label">— Nos Produits Phares</div>
   <div class="products-grid">
 
-```
-<div class="product-card featured reveal">
-  <div class="product-badge">⚡ Bestseller</div>
-  <span class="product-icon">💻</span>
-  <div class="product-cat">Laptop Gaming</div>
-  <div class="product-name">ROG Zephyrus<br>G16 2025</div>
-  <div class="product-desc">Processeur AMD Ryzen 9, RTX 4090, écran OLED 240Hz. La bête ultime pour les créateurs et gamers exigeants.</div>
-  <div class="product-price">À partir de 2 499€</div>
-  <div class="product-arrow">↗</div>
-</div>
+    <div class="product-card featured reveal">
+      <div class="product-badge">⚡ Bestseller</div>
+      <span class="product-icon">💻</span>
+      <div class="product-cat">Laptop Gaming</div>
+      <div class="product-name">ROG Zephyrus G16 2025</div>
+      <div class="product-desc">Processeur AMD Ryzen 9, RTX 4090, écran OLED 240Hz. La bête ultime pour les créateurs et gamers exigeants.</div>
+      <div class="product-price">À partir de 2 499€</div>
+      <div class="product-arrow">↗</div>
+    </div>
 
-<div class="product-card reveal reveal-delay-1">
-  <div class="product-badge">Nouveau</div>
-  <span class="product-icon">🖥️</span>
-  <div class="product-cat">Moniteur</div>
-  <div class="product-name">LG UltraGear<br>32" 4K OLED</div>
-  <div class="product-desc">240Hz, 0.03ms GTG, compatible G-Sync et FreeSync Premium Pro.</div>
-  <div class="product-price">1 199€</div>
-  <div class="product-arrow">↗</div>
-</div>
+    <div class="product-card reveal d1">
+      <div class="product-badge">Nouveau</div>
+      <span class="product-icon">🖥️</span>
+      <div class="product-cat">Moniteur</div>
+      <div class="product-name">LG UltraGear 32" 4K OLED</div>
+      <div class="product-desc">240Hz, 0.03ms GTG, compatible G-Sync et FreeSync Premium Pro.</div>
+      <div class="product-price">1 199€</div>
+      <div class="product-arrow">↗</div>
+    </div>
 
-<div class="product-card reveal reveal-delay-2">
-  <span class="product-icon">⚡</span>
-  <div class="product-cat">Processeur</div>
-  <div class="product-name">AMD Ryzen 9<br>9950X</div>
-  <div class="product-desc">16 cœurs, 32 threads, 5.7GHz boost. Le summum de la performance desktop.</div>
-  <div class="product-price">699€</div>
-  <div class="product-arrow">↗</div>
-</div>
+    <div class="product-card reveal d2">
+      <span class="product-icon">⚡</span>
+      <div class="product-cat">Processeur</div>
+      <div class="product-name">AMD Ryzen 9 9950X</div>
+      <div class="product-desc">16 cœurs, 32 threads, 5.7GHz boost. Le summum de la performance desktop.</div>
+      <div class="product-price">699€</div>
+      <div class="product-arrow">↗</div>
+    </div>
 
-<div class="product-card reveal reveal-delay-3">
-  <span class="product-icon">🎮</span>
-  <div class="product-cat">Carte Graphique</div>
-  <div class="product-name">AMD RX 9070<br>XT 16GB</div>
-  <div class="product-desc">Architecture RDNA 4, ray tracing nouvelle génération, 16GB GDDR6.</div>
-  <div class="product-price">849€</div>
-  <div class="product-arrow">↗</div>
-</div>
+    <div class="product-card reveal d3">
+      <span class="product-icon">🎮</span>
+      <div class="product-cat">Carte Graphique</div>
+      <div class="product-name">AMD RX 9070 XT 16GB</div>
+      <div class="product-desc">Architecture RDNA 4, ray tracing nouvelle génération, 16GB GDDR6.</div>
+      <div class="product-price">849€</div>
+      <div class="product-arrow">↗</div>
+    </div>
 
-<div class="product-card reveal reveal-delay-4">
-  <span class="product-icon">💾</span>
-  <div class="product-cat">Stockage</div>
-  <div class="product-name">Samsung 990<br>Pro 2TB NVMe</div>
-  <div class="product-desc">Lectures à 7 450 Mo/s, parfait pour les workstations créatives haute performance.</div>
-  <div class="product-price">189€</div>
-  <div class="product-arrow">↗</div>
-</div>
-```
+    <div class="product-card reveal d4">
+      <span class="product-icon">💾</span>
+      <div class="product-cat">Stockage</div>
+      <div class="product-name">Samsung 990 Pro 2TB NVMe</div>
+      <div class="product-desc">Lectures à 7 450 Mo/s, parfait pour les workstations créatives haute performance.</div>
+      <div class="product-price">189€</div>
+      <div class="product-arrow">↗</div>
+    </div>
 
   </div>
 </section>
 
 <!-- AVANTAGES -->
-
 <section class="section avantages" id="avantages">
-  <div class="section-label" style="color:var(--accent2)">— Pourquoi AMD Business</div>
+  <div class="section-label">— Pourquoi AMD Business</div>
   <div class="avantages-header reveal">
     <h2 class="avantages-title">Le Choix<br><em>Évident</em><br>Pour Vous.</h2>
-    <p class="avantages-intro">Nous ne vendons pas simplement des produits. Nous sélectionnons, testons, et garantissons chaque article pour vous offrir une expérience sans compromis.</p>
+    <p class="avantages-intro">Nous ne vendons pas simplement des produits. Nous sélectionnons, testons et garantissons chaque article pour vous offrir une expérience sans compromis.</p>
   </div>
   <div class="avantages-list">
     <div class="avantage-item reveal">
@@ -836,17 +730,17 @@ transform: translateY(0);
       <div class="avantage-title">Sélection Rigoureuse</div>
       <div class="avantage-desc">Chaque produit est testé par notre équipe d'experts avant d'intégrer notre catalogue.</div>
     </div>
-    <div class="avantage-item reveal reveal-delay-1">
+    <div class="avantage-item reveal d1">
       <div class="avantage-num">02</div>
       <div class="avantage-title">Livraison Express</div>
       <div class="avantage-desc">Expédition sous 24h avec suivi en temps réel et livraison sécurisée à domicile.</div>
     </div>
-    <div class="avantage-item reveal reveal-delay-2">
+    <div class="avantage-item reveal d2">
       <div class="avantage-num">03</div>
       <div class="avantage-title">SAV Prioritaire</div>
       <div class="avantage-desc">Support 7j/7, garantie étendue 3 ans et retour gratuit sous 30 jours.</div>
     </div>
-    <div class="avantage-item reveal reveal-delay-3">
+    <div class="avantage-item reveal d3">
       <div class="avantage-num">04</div>
       <div class="avantage-title">Prix Compétitifs</div>
       <div class="avantage-desc">Nous nous alignons sur les meilleurs prix du marché, garanti ou remboursé.</div>
@@ -854,57 +748,55 @@ transform: translateY(0);
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-
-<section class="section testimonials" id="avis">
-  <div class="testimonials-bg"></div>
+<!-- AVIS -->
+<section class="section" id="avis">
   <div class="section-label">— Ce Qu'ils Disent</div>
   <div class="testimonials-grid">
-    <div class="testimonial-card reveal">
-      <div class="testimonial-quote">"</div>
+    <div class="tcard featured-t reveal">
+      <div class="tcard-quote">"</div>
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Commande reçue en 18h chrono, emballage irréprochable et le laptop correspond exactement à la description. AMD Business est devenu mon revendeur tech de confiance.</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">KM</div>
+      <p class="tcard-text">Commande reçue en 18h chrono, emballage irréprochable et le laptop correspond exactement à la description. AMD Business est devenu mon revendeur tech de confiance.</p>
+      <div class="tcard-author">
+        <div class="avatar">KM</div>
         <div>
           <div class="author-name">Karim M.</div>
-          <div class="author-role">Développeur Freelance, Paris</div>
+          <div class="author-role">Développeur Freelance · Paris</div>
         </div>
       </div>
     </div>
-    <div class="testimonial-card reveal reveal-delay-1">
-      <div class="testimonial-quote">"</div>
+    <div class="tcard reveal d1">
+      <div class="tcard-quote">"</div>
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Le SAV a été réactif et professionnel lors d'un problème de livraison. Ils ont résolu la situation en moins de 2h. Je recommande sans hésitation !</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">SL</div>
+      <p class="tcard-text">Le SAV a été réactif et professionnel lors d'un problème de livraison. Ils ont résolu la situation en moins de 2h. Je recommande sans hésitation !</p>
+      <div class="tcard-author">
+        <div class="avatar">SL</div>
         <div>
           <div class="author-name">Sophie L.</div>
-          <div class="author-role">Architecte, Lyon</div>
+          <div class="author-role">Architecte · Lyon</div>
         </div>
       </div>
     </div>
-    <div class="testimonial-card reveal reveal-delay-2">
-      <div class="testimonial-quote">"</div>
+    <div class="tcard reveal d2">
+      <div class="tcard-quote">"</div>
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Rapport qualité-prix imbattable sur la carte graphique. Installation plug-and-play, performances au rendez-vous pour mes sessions de streaming.</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">TR</div>
+      <p class="tcard-text">Rapport qualité-prix imbattable sur la carte graphique. Installation plug-and-play, performances au rendez-vous pour mes sessions de streaming.</p>
+      <div class="tcard-author">
+        <div class="avatar">TR</div>
         <div>
           <div class="author-name">Thomas R.</div>
           <div class="author-role">Streamer & Créateur de contenu</div>
         </div>
       </div>
     </div>
-    <div class="testimonial-card reveal reveal-delay-3">
-      <div class="testimonial-quote">"</div>
+    <div class="tcard reveal d3">
+      <div class="tcard-quote">"</div>
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">J'ai équipé toute mon agence grâce à AMD Business. Le suivi personnalisé et les tarifs professionnels font vraiment la différence. Partenaire de choix !</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">AM</div>
+      <p class="tcard-text">J'ai équipé toute mon agence grâce à AMD Business. Le suivi personnalisé et les tarifs pros font vraiment la différence. Partenaire de choix !</p>
+      <div class="tcard-author">
+        <div class="avatar">AM</div>
         <div>
           <div class="author-name">Aïcha M.</div>
-          <div class="author-role">Directrice, Agence Digital 360</div>
+          <div class="author-role">Directrice · Agence Digital 360</div>
         </div>
       </div>
     </div>
@@ -912,24 +804,22 @@ transform: translateY(0);
 </section>
 
 <!-- CTA -->
-
 <section class="cta-section" id="contact">
-  <div class="cta-bg-text">AMD</div>
+  <div class="cta-bg">AMD</div>
   <div class="cta-tag">// Prêt à upgrader ?</div>
-  <h2 class="cta-title">Passez à<br>la vitesse<br>supérieure.</h2>
+  <h2 class="cta-title">Passez à la<br>vitesse supérieure.</h2>
   <p class="cta-sub">Rejoignez plus de 5 000 clients satisfaits et équipez-vous avec les meilleures technologies du moment.</p>
-  <div class="cta-buttons">
-    <a href="#produits" class="btn-primary">Voir les produits →</a>
-    <a href="/cdn-cgi/l/email-protection#15767a7b61747661557478717760667c7b7066663b7367" class="btn-secondary">Nous contacter</a>
+  <div class="cta-btns">
+    <a href="#produits" class="btn-dark">Voir les produits →</a>
+    <a href="mailto:contact@amdbusiness.fr" class="btn-outline">Nous contacter</a>
   </div>
 </section>
 
 <!-- FOOTER -->
-
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <span class="nav-logo">AMD<span style="color:var(--accent)">.</span>BUSINESS</span>
+      <span class="footer-logo">AMD<span>.</span>BUSINESS</span>
       <p>Votre spécialiste en produits électroniques haute performance. Sélection, expertise et service irréprochable depuis 2020.</p>
       <div class="footer-social">
         <a href="#" class="social-btn">𝕏</a>
@@ -976,47 +866,12 @@ transform: translateY(0);
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-
-// Cursor
-const cursor = document.getElementById(‘cursor’);
-const ring = document.getElementById(‘cursorRing’);
-let mx = 0, my = 0, rx = 0, ry = 0;
-
-document.addEventListener(‘mousemove’, e => {
-mx = e.clientX; my = e.clientY;
-cursor.style.left = mx + ‘px’;
-cursor.style.top = my + ‘px’;
-});
-
-function animateRing() {
-rx += (mx - rx) * 0.12;
-ry += (my - ry) * 0.12;
-ring.style.left = rx + ‘px’;
-ring.style.top = ry + ‘px’;
-requestAnimationFrame(animateRing);
-}
-animateRing();
-
-document.querySelectorAll(‘a, button, .product-card, .avantage-item’).forEach(el => {
-el.addEventListener(‘mouseenter’, () => { cursor.classList.add(‘hover’); ring.classList.add(‘hover’); });
-el.addEventListener(‘mouseleave’, () => { cursor.classList.remove(‘hover’); ring.classList.remove(‘hover’); });
-});
-
-// Scroll reveal
-const reveals = document.querySelectorAll(’.reveal’);
-const observer = new IntersectionObserver((entries) => {
-entries.forEach(e => { if (e.isIntersecting) e.target.classList.add(‘visible’); });
-}, { threshold: 0.1 });
-reveals.forEach(el => observer.observe(el));
-
-// Nav background on scroll
-const nav = document.querySelector(‘nav’);
-window.addEventListener(‘scroll’, () => {
-nav.style.mixBlendMode = window.scrollY > 100 ? ‘normal’ : ‘difference’;
-if (window.scrollY > 100) {
-nav.style.background = ‘rgba(10,10,10,0.95)’;
-nav.style.backdropFilter = ‘blur(20px)’;
-nav.style.borderBottom = ‘1px solid rgba(255,255,255,0.06)’;
-} else {
-nav
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
